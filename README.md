@@ -25,11 +25,11 @@ PDF upload, extraction, FastAPI usage, nbformat notebook assembly, and notebook 
 
 ## Requirements and dependencies
 
-- **Python 3.11+** is the recommended setup. The current local verification used Python 3.14; a full Python/platform compatibility matrix has not been tested.
+- **Python 3.11+** is the recommended setup. Automated installation and tests passed with Python 3.11 and 3.14 on Ubuntu, macOS, and Windows. Other Python versions are not covered by that matrix.
 - **Ollama**, installed separately and reachable at `http://127.0.0.1:11434`.
 - **Default model:** `qwen3:4b-instruct`. Its [Ollama model page](https://ollama.com/library/qwen3:4b-instruct) lists a download of approximately 2.5 GB. Allow additional disk space for Ollama and Python dependencies.
 - **Memory:** allow space in RAM for the model, its 32,768-token context, and the app. The 2.5 GB download size is not a RAM requirement. A minimum RAM/GPU configuration has not been established by this review; use `ollama ps` during generation to inspect the loaded model, as described in [Ollama's FAQ](https://docs.ollama.com/faq).
-- **Platform:** setup and automated tests were checked on macOS. Consult [Ollama's macOS requirements](https://docs.ollama.com/macos) for supported hardware and OS versions. Windows and Linux have not been verified for this app.
+- **Platform:** automated tests passed on macOS, Windows, and Ubuntu. Real Ollama generation was checked on macOS only. Consult [Ollama's macOS requirements](https://docs.ollama.com/macos) and the [installation guide](INSTALL.md) for platform-specific prerequisites.
 - Internet is needed for installation/model downloads and to use Google Colab. Generation itself uses the local model. Running a downloaded notebook locally does not require Ollama.
 
 Python dependencies are declared in [requirements.txt](requirements.txt):
@@ -140,7 +140,7 @@ The current model field is used for readiness checks and subsequent generation r
 - **Cancellation:** the browser stops waiting, but local generation may continue.
 - **Local demo deployment:** the app binds to loopback and has no authentication, job queue, saved project history, or production multi-user deployment configuration.
 - **No arXiv/URL input or direct Colab upload:** PDFs are uploaded manually and notebooks are downloaded manually. The preview shows cell source, not executed outputs or rendered notebook plots.
-- **Platform/dependency coverage:** verified locally on macOS, not across all platforms or dependency versions. Dependency ranges are not a lockfile. The test suite currently emits a Starlette/HTTPX deprecation warning.
+- **Platform/dependency coverage:** installation and mocked tests passed on macOS, Windows, and Ubuntu with Python 3.11 and 3.14; live model generation was tested only on macOS. Dependency ranges are not a lockfile. The test suite currently emits a Starlette/HTTPX deprecation warning.
 
 ## Data handling
 
@@ -184,7 +184,7 @@ A separate macOS smoke test started that clean copy with `python run.py`, checke
 
 After publication, the public GitHub ZIP was downloaded without authentication and all 14 files were compared against the committed source. A second fresh environment installed successfully, passed all 26 tests and dependency checks, and started the downloaded app with `python run.py`. A real local generation request returned a 16-cell notebook; all seven code cells ran and a plot rendered. Review nevertheless found a logical error in one exercise: it assigned a new population mean to an unused variable, while the sampling function kept using the old mean. This confirms that a runnable notebook can still contain incorrect results; syntax validation is not a correctness guarantee.
 
-Automated tests can be run with the command above on another installation. Windows/Linux execution and a full Python-version compatibility matrix have not been verified. Browser interactions and launcher process-management edge cases are not covered by the test suite.
+On November 10, 2026, [all six GitHub Actions jobs passed](https://github.com/SumayMisra/paper-to-practice-local/actions/runs/42857269321): dependency installation, `pip check`, and the test suite on Ubuntu, macOS, and Windows, each with Python 3.11 and 3.14. Automated tests can also be run with the command above on another installation. Browser interactions, live Ollama generation on Windows/Linux, and launcher process-management edge cases are not covered by those checks.
 
 The [Tests workflow](.github/workflows/tests.yml) installs dependencies, runs `pip check`, and runs the mocked tests on Ubuntu, macOS, and Windows with Python 3.11 and 3.14. It runs on pushes and pull requests and can also be started manually. The workflow uses read-only repository permissions and official actions pinned to specific revisions. Check the [Actions results](https://github.com/SumayMisra/paper-to-practice-local/actions/workflows/tests.yml) for pass/fail status. These checks do not install Ollama or establish model quality, GPU compatibility, or live generation performance.
 
