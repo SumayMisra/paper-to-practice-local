@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Paper to Practice · Research, made runnable</title><link rel="stylesheet" href="/static/style.css"><script src="/static/app.js" defer></script></head>
+<body>
+<header><a class="brand" href="/"><span class="logo">p<span>↗</span></span> paper to practice<span class="beta">LAB</span></a><span class="header-note"><span class="dot"></span> Your local research workspace</span></header>
+<main>
+  <section class="intro"><div class="eyebrow">FROM UNDERSTANDING TO EXPERIMENTING</div><h1>Great papers deserve<br><em>a working notebook.</em></h1><p>Turn a research paper into a hands-on tutorial.<br>Understand the ideas, explore the code, and make it your own.</p><div class="flow"><span>01 &nbsp; Bring a paper</span><b>→</b><span>02 &nbsp; Build understanding</span><b>→</b><span>03 &nbsp; Run in Colab</span></div></section>
+  <div class="workspace">
+  <section class="input-panel">
+    <div class="panel-heading"><div><span class="eyebrow">YOUR STARTING POINT</span><h2>Create a tutorial</h2></div><span class="step-badge">01 / 02</span></div>
+    <form id="form">
+      <label class="field-label" for="pdf">Research paper</label>
+      <div id="dropzone" class="dropzone"><input id="pdf" name="file" type="file" accept=".pdf,application/pdf" required aria-describedby="file-help"><span class="file-icon" aria-hidden="true">↥</span><strong id="file-title">Drop your paper here</strong><span id="file-help">or click to browse · PDF up to 12 MB, 100 pages</span></div>
+      <div class="local-setup">
+        <strong>Local AI · No API key or credits needed</strong>
+        <p id="local-status" class="helper" role="status">Checking your local model…</p>
+        <button id="check-local" class="secondary" type="button">Check connection</button>
+        <details><summary>First-time setup</summary><p class="helper">Install and open <a href="https://ollama.com/download/mac" target="_blank" rel="noopener noreferrer">Ollama</a>, then run this once in your terminal:</p><pre><code>ollama pull qwen3:4b-instruct</code></pre><p class="helper">The model download is about 2.5 GB. After setup, generation runs on your Mac without API charges. If Ollama was set up with this project, restarting <code>python run.py</code> starts it automatically.</p></details>
+      </div>
+      <label class="field-label" for="level">Who is this tutorial for?</label><select id="level" name="level"><option value="beginner">Beginner · Build intuition from the basics</option><option value="intermediate" selected>Intermediate · Connect theory and code</option><option value="advanced">Advanced · Go deeper into the method</option></select>
+      <label class="field-label" for="focus">Anything to focus on? <span class="optional">Optional</span></label><textarea id="focus" name="focus" rows="2" maxlength="1000" placeholder="e.g. Explain the loss function and implement a small example"></textarea>
+      <details class="advanced"><summary>Advanced settings</summary><label class="field-label" for="model">Local Ollama model</label><input id="model" name="model" value="qwen3:4b-instruct" pattern="[a-zA-Z0-9][a-zA-Z0-9._:\-]{0,99}" required maxlength="100"><p class="helper">Use a downloaded local text model with structured output support. Cloud models are not supported.</p></details>
+      <p class="privacy">Your PDF text is processed on your Mac. No API key or credits needed. Scanned PDFs need OCR first. Long papers use page excerpts; figures are not read.</p>
+      <button class="primary" id="generate" type="submit">Create my notebook <span>↗</span></button>
+      <div id="error" role="alert" hidden></div>
+    </form>
+  </section>
+  <section class="output-panel" aria-label="Notebook output">
+    <div class="output-top"><span class="eyebrow">THE OTHER SIDE OF THE PAPER</span><span class="format-tag">.ipynb</span></div>
+    <div id="empty-state"><div class="notebook-illustration" aria-hidden="true"><div class="illus-bar"><i></i><i></i><i></i><span>your-next-discovery.ipynb</span></div><div class="illus-body"><div class="illus-title">From idea to implementation</div><div class="illus-line wide"></div><div class="illus-line"></div><div class="illus-code"><span>[1]</span><code><b>def</b> understand(paper):<br>&nbsp;&nbsp;ideas = explore(paper)<br>&nbsp;&nbsp;<b>return</b> put_into_practice(ideas)</code></div><div class="chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="illus-line wide"></div></div></div><h2>A paper you can learn by doing.</h2><p>A guided notebook, built around your paper’s ideas.<br>Ready to download, explore, and run in Google Colab.</p><div class="features"><div><span>◎</span><strong>Intuition first</strong><small>Concepts and equations explained</small></div><div><span>⌘</span><strong>Hands-on Python</strong><small>Small experiments and visualizations</small></div><div><span>↗</span><strong>Keep exploring</strong><small>Exercises, solutions, and next steps</small></div></div></div>
+    <div id="loading-state" hidden aria-live="polite"><div class="spinner"></div><h2>Turning research into practice</h2><p id="progress-text">Reading your paper locally…</p><p class="helper">Local generation can take several minutes. Keep this tab open.</p><div class="loading-steps"><span>✓ PDF selected</span><span class="working">◌ Writing your tutorial</span><span>○ Checking notebook and Python syntax</span></div><button type="button" id="cancel" class="secondary">Cancel request</button><p class="helper">Cancellation stops waiting; the local model may continue generating.</p></div>
+    <div id="result-state" hidden><div class="success-label">✓ YOUR NOTEBOOK IS READY</div><h2 id="result-title"></h2><p id="result-summary"></p><div id="stats" class="stats"></div><div class="result-actions"><a id="download" class="primary" download>Download notebook ↓</a><a class="secondary" href="https://colab.research.google.com/" target="_blank" rel="noopener noreferrer">Open Colab ↗</a></div><p class="helper">In Colab: <strong>File → Upload notebook</strong>, then select your downloaded .ipynb.</p><p id="validation" class="validation"></p><p id="source-notes" class="helper"></p><div class="preview-heading"><h3>Inside your notebook</h3><span>Source preview</span></div><div id="preview"></div></div>
+  </section>
+  </div>
+  <footer><span>Made for curious minds.</span><span>PDF → understanding → Python</span></footer>
+</main>
+</body></html>
