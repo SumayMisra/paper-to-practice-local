@@ -1,6 +1,6 @@
 # Paper to Practice Local
 
-[Download ZIP](https://github.com/SumayMisra/paper-to-practice-local/archive/refs/heads/main.zip) · [Installation guide](INSTALL.md)
+[Download ZIP](https://github.com/SumayMisra/paper-to-practice-local/archive/refs/heads/main.zip) · [Installation guide](INSTALL.md) · [Automated test results](https://github.com/SumayMisra/paper-to-practice-local/actions/workflows/tests.yml)
 
 Turn a research paper PDF into a guided Python tutorial notebook using a model running locally through Ollama. Upload a paper, choose an audience and learning focus, preview the generated cells, and download an `.ipynb` for Google Colab or Jupyter.
 
@@ -159,6 +159,7 @@ The app does not deliberately save uploaded PDFs or generated notebooks on the s
 ├── run.py                 # Entry point: local web server on port 8001
 ├── requirements.txt       # Runtime and test dependencies
 ├── INSTALL.md             # First-time download and installation guide
+├── .github/workflows/     # Dependency checks and tests across three operating systems
 ├── static/                # Plain HTML, CSS, and JavaScript interface
 ├── tests/test_app.py      # API, extraction, and mocked generation tests
 ├── ATTRIBUTION.md         # Original project credit and preserved license notice
@@ -184,6 +185,8 @@ A separate macOS smoke test started that clean copy with `python run.py`, checke
 After publication, the public GitHub ZIP was downloaded without authentication and all 14 files were compared against the committed source. A second fresh environment installed successfully, passed all 26 tests and dependency checks, and started the downloaded app with `python run.py`. A real local generation request returned a 16-cell notebook; all seven code cells ran and a plot rendered. Review nevertheless found a logical error in one exercise: it assigned a new population mean to an unused variable, while the sampling function kept using the old mean. This confirms that a runnable notebook can still contain incorrect results; syntax validation is not a correctness guarantee.
 
 Automated tests can be run with the command above on another installation. Windows/Linux execution and a full Python-version compatibility matrix have not been verified. Browser interactions and launcher process-management edge cases are not covered by the test suite.
+
+The [Tests workflow](.github/workflows/tests.yml) installs dependencies, runs `pip check`, and runs the mocked tests on Ubuntu, macOS, and Windows with Python 3.11 and 3.14. It runs on pushes and pull requests and can also be started manually. The workflow uses read-only repository permissions and official actions pinned to specific revisions. Check the [Actions results](https://github.com/SumayMisra/paper-to-practice-local/actions/workflows/tests.yml) for pass/fail status. These checks do not install Ollama or establish model quality, GPU compatibility, or live generation performance.
 
 ## Troubleshooting
 
