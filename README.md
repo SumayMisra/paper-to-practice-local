@@ -181,6 +181,8 @@ On November 9, 2026, a clean source copy with a newly created Python 3.14.6 envi
 
 A separate macOS smoke test started that clean copy with `python run.py`, checked the homepage, static assets, health route, and model readiness, then submitted a synthetic one-page teaching note to the real local `qwen3:4b-instruct` model. It returned a valid 13-cell notebook with five code cells. After manual code review, all five cells ran in a separate NumPy/Matplotlib environment; two plots rendered and numerical checks passed. This is evidence for one simple example, not a guarantee for other papers, models, hardware, or scientific claims. The app itself still never executes generated code.
 
+After publication, the public GitHub ZIP was downloaded without authentication and all 14 files were compared against the committed source. A second fresh environment installed successfully, passed all 26 tests and dependency checks, and started the downloaded app with `python run.py`. A real local generation request returned a 16-cell notebook; all seven code cells ran and a plot rendered. Review nevertheless found a logical error in one exercise: it assigned a new population mean to an unused variable, while the sampling function kept using the old mean. This confirms that a runnable notebook can still contain incorrect results; syntax validation is not a correctness guarantee.
+
 Automated tests can be run with the command above on another installation. Windows/Linux execution and a full Python-version compatibility matrix have not been verified. Browser interactions and launcher process-management edge cases are not covered by the test suite.
 
 ## Troubleshooting
